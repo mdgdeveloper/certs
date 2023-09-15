@@ -29,7 +29,6 @@
 | **Role definition** | A collection of permissions that can be used to perform a particular task. |
 | **Scope** | The set of resources that a role definition can be assigned to. |
 
-
 | **Azure AD concept** | **Description** |
 | --- | --- |
 | **Identity** | Identity authentication is the process of verifying an entity, such as a user, application, or server, using unique credentials like usernames, passwords, secret keys, or certificates, with Azure AD being a popular service that provides this functionality. |
@@ -37,3 +36,31 @@
 | **Azure AD account** | Identity created through Azure AD or another MS Cloud Service (M365) |
 | **Azure tenant(directory)** | An instance of Azure AD dedicated to an organization. Each tenant represents a single organization. You can create multiple tenants or instances |
 | **Azure subscription** | A logical container used to provision resources in Azure. It holds the details of all your resources like virtual machines (VMs), databases, and more. Each subscription is joined to a single tenant. You can have multiple subscriptions. |
+
+
+### Differences between Azure AD and AD DS 
+- Azure AD is a cloud-based identity and access management service hosted in Microsoft Azure datacenters, whereas AD DS is the on-premises directory service included with Windows Server.
+
+- **Identity solution**: AD DS is a directory service while Azure AD is a **full identity solution**. Azure AD is designed for internet-based applications (HTTP/HTTPS) 
+
+- **Commuinication protocols**: AD DS uses Kerberos, NTLM, LDAP, and DNS, whereas Azure AD uses SAML 2.0, WS-Federation, and OAuth 2.0.
+
+- **Federation services**: Azure AD includes federation services
+
+- **Flat structure**: Azure AD users and groups are created in a flat structure (No OUs or GPOs)
+
+- **Managed service**: You manage only users, groups and policies. Microsoft manages the underlying infrastructure.
+
+### Azure AD editions
+- **Free**: Manage user accounts, synchronize with on-premises directories, get single sign-on across Azure, Office 365, and thousands of popular SaaS applications like Salesforce, Workday, Concur, DocuSign, Google Apps, Box, ServiceNow, Dropbox, and more.
+- **Office 365 apps**: Includes all Free edition features, plus group-based access management, self-service password reset for cloud applications, Azure AD Application Proxy, and security reporting.
+- **Premium P1**: Includes all Office 365 apps edition features, plus self-service password reset for on-premises applications, advanced security reports, Microsoft Identity Manager (an on-premises identity and access management suite), and Microsoft Cloud App Security.
+- **Premium P2**: Includes all Premium P1 edition features, plus Azure Active Directory Identity Protection (detects vulnerabilities and risk events related to user identities), Azure Active Directory Privileged Identity Management (provides time-based and approval-based role activation to mitigate risks), and Azure AD B2C (a consumer identity and access management solution that supports customer and citizen access to web and mobile applications).
+
+
+### AD Join
+- Connection options
+    - Register
+    - Join: Extension of registering a device. 
+- Combine using MDM (Mobile Device Management) like Intune.
+
