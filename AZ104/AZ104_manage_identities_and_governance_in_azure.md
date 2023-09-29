@@ -64,3 +64,110 @@
     - Join: Extension of registering a device. 
 - Combine using MDM (Mobile Device Management) like Intune.
 
+## Role-Based Acces Contrl (RBAC)
+- **Security principal**: Object which represents something that requests access to resource (users, groups, managed identity, service principal)
+- **Role definition**: Set of permissions
+- **Scope**: Boundary of requested level of access
+- **Assignment**: Attaches a role definition to a security princpial in an specific scope
+
+### Interesting things to know about RBAC
+
+* The purpose of a role assignment is to control access.
+* The scope limits which permissions defined for a role are available for the assigned requestor.
+* Access is revoked by removing a role assignment.
+* A resource inherits role assignments from its parent resource.
+* The effective permissions for a requestor are a combination of the permissions for the requestor's assigned roles, and the permissions for the roles assigned to the requested resources.
+
+## User Accounts in Azure AD
+### Permissions and roles
+User assigned - inherit permissions from that role. 
+
+### Administrator roles 
+Allow users elevated access to control who is allowed to do what. 
+
+Powershell:
+```powershell 
+New-AzureADUser
+```
+
+Azure CLI: 
+```powershell
+az ad user create
+```
+
+### Member users
+- Native member of Azure AD 
+- Set of default permissions
+- Considered internal 
+
+### Guest users 
+- Restricted Azure AD org permissions
+- Considered external
+
+### Add user accounts
+- Azure CLI:
+```powershell
+# Create a new user
+az ad user create
+```
+
+- Azure Powershell:
+```powershell
+# Create a new user
+New-AzureADUser
+```
+
+Example on how to bulk invite guest users
+```powershell
+$invitations = import-csv c:\path\invitations.csv
+
+$messageInfo = New-Object Microsoft.Open.MSGraph.Model.InvitedUserMessageInfo
+
+$messageInfo.customizedMessageBody = "Hello. You are invited to join Contoso. Please click the link below to join."
+
+foreach($email in $invitations)
+{
+    New-AzureADMSInvitation `
+    -InvitedUserEmailAddress $email `
+    -InvitedUserDisplayName $email.Name `
+    -InviteRedirectUrl https://myapps.microsoft.com `
+    -InvitedUserMessageInfo $messageInfo `
+    -SendInvitationMessage $true
+}
+
+```
+
+### Remove user accounts
+```powershell
+# Rmove user
+Remove-AzADUser -ObjectId <objectID>
+```
+
+### Access management
+- Azure AD Roles: Azure AD-related resources like users, groups, billing, licensing, application registration, etc.
+- Role-based access control (RBAC): Azure resources like VMs, storage, databases, etc.
+
+### Azure AD Access
+- Direct assignment
+- Group assignment
+- Rule-based assignment 
+
+
+## Azure RBAC 
+Azure role-based access control (Azure RBAC) is an authorization system built on Azure Resource Manager that provides fine-grained access management for resources in Azure. 
+
+### How it works
+1. Security principal (WHO)
+2. Role definition (WHAT)
+    - Owner
+    - Contributor
+    - Reader
+    - User Access Administrator
+3. Scope (WHERE)
+4. Role assignment (HOW)
+
+### Azure RBAC is an allow model
+When you're assigned a role, Azure RBAC allows you to perform certain actions, such as read, write, or delete
+
+Azure RBAC ```NotActions``` is computed by subtracting the actions in the role definition from the ```Actions```.
+
